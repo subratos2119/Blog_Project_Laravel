@@ -1,8 +1,14 @@
 @extends('user/app')
 
- @section('bg-img',asset('public/user/img/post-bg.jpg'))
+ @section('bg-img', asset('public/user/img/'.$post->image))
+ @section('head')
+
+ <link rel="stylesheet" type="text/css" href="{{ asset('public/user/css/prism.css') }}">
+
+ @endsection
+
  @section('title',$post->title)
- @section('sub-heading',$post->subtitle)
+ @section('sub-heading',$post->subTitle)
  
 @section('main-content')
 
@@ -14,15 +20,15 @@
           <small>Created At {{ $post->created_at->diffForHumans() }}</small><br>
           @foreach($post->categories as $category)
           <small class="pull-right">
-            {{ $category->name }}
+            <a href="">{{ $category->name }}</a>
           </small>
           @endforeach
             {!! htmlspecialchars_decode($post->body) !!}
 
-            {{-- tag clouds --}}
+            <h3>Tag Clouds</h3>
             @foreach($post->tags as $tag)
-          <small class="pull-right" style="margin-right: 20px;border-radius: 5px;">
-            {{ $tag->name }}
+          <small class="pull-left" style="margin-right: 20px;border-radius: 5px;border: 1px solid gray;padding: 5px;">
+            <a href="">{{ $tag->name }}</a>
           </small>
           @endforeach
         </div>
@@ -33,3 +39,9 @@
   <hr>
 
 @endsection
+
+ @section('head')
+ 
+ <script src="{{ asset('public/user/js/prism.js') }}"></script>
+
+ @endsection

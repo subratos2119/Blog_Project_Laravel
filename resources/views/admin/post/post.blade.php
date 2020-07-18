@@ -27,17 +27,9 @@
               <h3 class="box-title">Title</h3>
             </div>
             <!-- /.errors messege -->
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            @include('includes.messege')
             <!-- form start -->
-            <form role="form" action="{{ route('post.store') }}" method="post">
+            <form role="form" action="{{ route('post.store') }}" method="post" enctype="multipart/form-data">
               @csrf
               <div class="box-body">
               	<div class="col-lg-6">
@@ -125,6 +117,6 @@
 
 @section('footerSection')
 
-<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+<script src="{{ asset('public/admin/ckeditor/ckeditor.js') }}"></script>
 
 @endsection

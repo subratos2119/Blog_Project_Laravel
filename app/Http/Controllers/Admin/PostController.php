@@ -7,10 +7,13 @@ use App\Model\user\post;
 use App\Model\user\tag;
 use App\Model\user\category;
 use Illuminate\Http\Request;
+use Image;
 
 
 class PostController extends Controller
 {
+    
+
     /**
      * Display a listing of the resource.
      *
@@ -49,21 +52,33 @@ class PostController extends Controller
             'subtitle' => 'required',
             'slug' => 'required',
             'body' => 'required',
+            'image' => 'required|image',
 
         ]);
 
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $fileName = time().'.'.$image->getClientOriginalExtension();
+            $location = public_path().'/user/img/'.$fileName;
+            Image::make($image)->save($location);
+        }else{
+           $fileName = null;
+        }
+
             $post = new post;
-            $post->title = $request->title;
+            $post->image    = $fileName;
+            $post->title    = $request->title;
             $post->subtitle = $request->subtitle;
-            $post->slug = $request->slug;
-            $post->body = $request->body;
-            $post->status = $request->status;
+            $post->slug     = $request->slug;
+            $post->body     = $request->body;
+            $post->status   = $request->status;
             $post->save();
             $post->tags()->sync($request->tags);
             $post->categories()->sync($request->categories);
             
 
-            return redirect(route('post.index'));
+            return redirect(route('post.index'))->with('messege', 'Post Successfully');
 
 
     }
@@ -110,20 +125,35 @@ class PostController extends Controller
             'subtitle' => 'required',
             'slug' => 'required',
             'body' => 'required',
+            'image' => 'required|image',
 
         ]);
+  
+        $post = post::find($id);
 
-            $post = post::find($id);
-            $post->title = $request->title;
+
+        if ($request->hasFile('image')) {
+            @unlink('public/user/img/'.$post->image);
+            $image = $request->file('image');
+            $fileName = time().'.'.$image->getClientOriginalExtension();
+            $location = public_path().'/user/img/'.$fileName;
+            Image::make($image)->save($location);
+        }else{
+           $fileName = null;
+        }
+
+            
+            $post->image    =  $fileName; 
+            $post->title    = $request->title;
             $post->subtitle = $request->subtitle;
-            $post->slug = $request->slug;
-            $post->body = $request->body;
-            $post->status = $request->status;
+            $post->slug     = $request->slug;
+            $post->body     = $request->body;
+            $post->status   = $request->status;
             $post->tags()->sync($request->tags);
             $post->categories()->sync($request->categories);
             $post->update();
 
-            return redirect(route('post.index'));
+            return redirect(route('post.index'))->with('messege', 'Post Update Successfully');
     }
 
     /**
@@ -135,11 +165,10 @@ class PostController extends Controller
     public function destroy($id)
     {
         $posts = post::find($id);
+        unlink(public_path().'/user/img/'.$posts->image);
     
         $posts->delete();
 
-        return back();
-
-       
+        return back()->with('messege', 'Post Delete Successfully');;
     }
 }

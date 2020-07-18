@@ -2,7 +2,7 @@
 
 @section('main-content')
 
-   <div class="content-wrapper">
+ <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -24,66 +24,75 @@
            <!-- general form elements -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Title</h3>
+              <h3 class="box-title">Add Admin</h3>
             </div>
             <!-- /.box-header -->
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <!-- form start -->
-            <form role="form">
+            <form role="form" action="{{ route('user.store') }}" method="post">
+              @csrf
               <div class="box-body">
-              	<div class="col-lg-6">
-              		<div class="form-group">
-                  <label for="exampleInputTitle1">Post Title</label>
-                  <input type="text" class="form-control" id="exampleInputTitle1" name="title" placeholder="Title">
+                <div class="col-lg-6 col-lg-offset-3">
+                  <div class="form-group">
+                  <label for="exampleInputName1">User Name</label>
+                  <input type="text" class="form-control" id="exampleInputName1" name="name" placeholder="User Name" value="{{ old('name') }}">
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputSubtitle1">Post SubTitle</label>
-                  <input type="text" class="form-control" id="exampleInputSubtitle1" name="subtitle" placeholder="SubTitle">
+                  <label for="exampleInputEmail2">Email</label>
+                  <input type="text" class="form-control" id="exampleInputEmail2" name="email" placeholder="Email" value="{{ old('email') }}">
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputSlug1">Post Slug</label>
-                  <input type="text" class="form-control" id="exampleInputSlug1" name="slug " placeholder="Slug">
+                  <label for="Phone">Phone</label>
+                  <input type="text" class="form-control" id="Phone" name="phone" placeholder="Phone" value="{{ old('phone') }}">
                 </div>
-                
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" name="status"> Publish
-                  </label>
+                <div class="form-group">
+                  <label for="exampleInputPassword2">Password</label>
+                  <input type="password" class="form-control" id="exampleInputPassword2" name="password" placeholder="Password" value="{{ old('password') }}">
                 </div>
-				</div>
-				<div class="col-lg-6">
-					<div class="form-group">
-                  <label for="image">File input</label>
-                  <input type="file" name="image" id="image">
+                <div class="form-group">
+                  <label for="password_confirmation">Confirm Password</label>
+                  <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password">
                 </div>
-				</div>
-                
+                <div class="form-group">
+                  <label for="status">Status</label>
+                  <div class="checkbox">
+                  <label><input type="checkbox" name="status" @if (old('status') == 1)
+                    checked
+                  @endif value="1">Status</label>
+                </div>
+                </div>
+                <div class="form-group">
+                  <label>Assign Role</label>
+                  <div class="row">
+                    @foreach($roles as $role)
+                    <div class="col-md-3">
+                    <div class="checkbox">
+                      <label><input type="checkbox" name="role[]" value="{{$role->id}}">{{$role->name}}</label>
+                    </div>
+                  </div>
+                  @endforeach
+                  </div>
+                  
+                </div>
+                <div class="form-group">
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <a href="{{ route('user.index') }}" class="btn btn-warning">Back</a>
+                </div>
+               </div>
               </div>
               <!-- /.box-body -->
-              <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Write Post Body Here
-                <small>Simple and fast</small>
-              </h3>
-              <!-- tools box -->
-              <div class="pull-right box-tools">
-                <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                  <i class="fa fa-minus"></i></button>
-              </div>
-              <!-- /. tools -->
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body pad">
-              <form>
-                <textarea class="textarea" name="body" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-              </form>
-            </div>
-          </div>
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
-            </form>
-          </div>
+              
+            
+          </form>
+        </div>
           <!-- /.box -->
 
           

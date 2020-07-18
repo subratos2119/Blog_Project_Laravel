@@ -8,11 +8,11 @@
    <!-- Content Header (Page header) -->
    <section class="content-header">
       <h1>
-         Blank page
+         Laravel Blog Page
          <small>it all starts here</small>
       </h1>
       <ol class="breadcrumb">
-         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+         <li><a href="{{route('admin.home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
          <li><a href="#">Examples</a></li>
          <li class="active">Blank page</li>
       </ol>
@@ -22,7 +22,7 @@
       <!-- Default box -->
       <div class="box">
          <div class="box-header with-border">
-            <h3 class="box-title">Tags</h3>
+            <h3 class="box-title">Posts</h3>
             <a class="col-lg-offset-5 btn btn-success" href="{{ route('post.create') }}">Add New</a>
             <div class="box-tools pull-right">
                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -34,6 +34,7 @@
          <div class="box-body">
           <div class="box">
            <div class="box-header">
+            @include('includes.messege')
               <h3 class="box-title">Data Table With Full Features</h3>
            </div>
            <!-- /.box-header -->
@@ -42,6 +43,7 @@
                  <thead>
                     <tr>
                        <th>S.No</th>
+                       <th>Image</th>
                        <th>Title</th>
                        <th>Sub Title</th>
                        <th>Slug</th>
@@ -54,6 +56,9 @@
                 @foreach($posts as $row => $post)
                     <tr>
                        <td>{{$row + 1}}</td>
+                       <td>
+                          <img style="max-width: 50px" src="{{ asset('public/user/img/'.$post->image) }}">
+                       </td>
                        <td>{{$post->title}}</td>
                        <td>{{$post->subtitle}}</td>
                        <td>{{$post->slug}}</td>

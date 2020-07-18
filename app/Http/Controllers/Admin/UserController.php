@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Model\admin\admin;
+use App\Model\admin\role;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+   
+    
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.user.show');
+        $users = admin::all();
+
+        return view('admin.user.show',compact('users'));
     }
 
     /**
@@ -24,7 +31,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.create');
+        $roles = role::all();
+
+        return view('admin.user.create',compact('roles'));
     }
 
     /**
@@ -35,7 +44,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:admins',
+            'phone' => 'required|numeric',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $request['password'] = bcrypt($request->password);
+        $users = admin::create($request->all());
+        $users->roles()->sync($request->role);
+
+        return redirect(route('user.index'));
     }
 
     /**
@@ -57,7 +78,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users = admin::find($id);
+        $roles = role::all();
+
+        return view('admin.user.edit',compact('users','roles'));
     }
 
     /**
@@ -69,7 +93,18 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'phone' => 'required|numeric',
+        ]);
+
+        $request->status? : $request['status']=0;
+        $users = admin::where('id',$id)->update($request->except('_token','_method','role'));
+        admin::find($id)->roles()->sync($request->role);
+
+        return redirect(route('user.index'))->with('messege', 'User Update Successfully');
     }
 
     /**
@@ -80,6 +115,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $users = admin::find($id);
+    
+        $users->delete();
+
+        return back()->with('messege', 'User Delete Successfully');
     }
 }

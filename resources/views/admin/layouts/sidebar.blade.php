@@ -28,11 +28,13 @@
         <li class="header">MAIN NAVIGATION</li>
         <li class="active treeview">
           
+          
             <li class=""><a href="{{ route('post.index') }}"><i class="fa fa-circle-o"></i>Posts</a></li>
             <li class=""><a href="{{ route('category.index') }}"><i class="fa fa-circle-o"></i>Categories</a></li>
             <li class=""><a href="{{ route('tag.index') }}"><i class="fa fa-circle-o"></i>Tags</a></li>
-            <li class=""><a href="index.html"><i class="fa fa-circle-o"></i>Users</a></li>
-            
+            <li class=""><a href="{{ route('user.index') }}"><i class="fa fa-circle-o"></i>Users</a></li>
+            <li class=""><a href="{{ route('role.index') }}"><i class="fa fa-circle-o"></i>Roles</a></li>
+            <li class=""><a href="{{ route('permission.index') }}"><i class="fa fa-circle-o"></i>Permission</a></li>
         </li>
       </ul>
     </section>

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+   
     /**
      * Display a listing of the resource.
      *

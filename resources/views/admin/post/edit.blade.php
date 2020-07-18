@@ -27,17 +27,9 @@
               <h3 class="box-title">Title</h3>
             </div>
             <!-- /.errors messege -->
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            @include('includes.messege')
             <!-- form start -->
-            <form role="form" action="{{ route('post.update',$posts->id) }}" method="post">
+            <form role="form" action="{{ route('post.update',$posts->id) }}" method="post" enctype="multipart/form-data">
               @csrf
               @method('PUT')
               <div class="box-body">
@@ -65,6 +57,9 @@
 					<div class="form-group">
                   <label for="image">File input</label>
                   <input type="file" name="image" id="image">
+                </div>
+                <div class="form-group">
+                  <img style="max-width: 50px" src="{{ asset('public/user/img/'.$posts->image) }}">
                 </div>
                 <div class="form-group">
                 <label>Select Tags</label>
@@ -135,5 +130,11 @@
     </section>
     <!-- /.content -->
   </div>
+
+@endsection
+
+@section('footerSection')
+
+<script src="{{ asset('public/admin/ckeditor/ckeditor.js') }}"></script>
 
 @endsection

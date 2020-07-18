@@ -2,11 +2,11 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.3.8
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+    <strong>Copyright &copy; 2018-2020 <a href="#">Laravel Blog</a>.</strong> All rights
     reserved.
 
   <!-- jQuery 2.2.3 -->
-	<script src="{{ asset('plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
+	<script src="{{ asset('public/admin/plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
 	<!-- jQuery UI 1.11.4 -->
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->

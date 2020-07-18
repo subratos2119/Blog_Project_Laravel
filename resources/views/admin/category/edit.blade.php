@@ -27,15 +27,7 @@
               <h3 class="box-title">Title</h3>
             </div>
             <!-- /.box-header -->
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            @include('includes.messege')
             <!-- form start -->
             <form role="form" action="{{ route('category.update',$categorys->id) }}" method="post">
               @csrf
